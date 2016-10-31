@@ -6,10 +6,41 @@ The [scripts](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/mon-scripts.htm
 
 This code helps fill that gap, monitoring CPU, Memory, Disk and Network metrics on FreeBSD using pure Python. In theory, this will work on any architecture on which [psutil](https://github.com/giampaolo/psutil) is configured to work, but this code has been tested on FreeBSD only.
 
-### Requirements
+### AWS Requirements
 
-* Python >= 2.7
-* Modules listed in requirements.txt
+To push metrics to CloudWatch, you'll first want to [create an IAM role](http://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_manage.html) with permission to perform the following operations:
+
+* cloudwatch:PutMetricData
+* cloudwatch:GetMetricStatistics
+* cloudwatch:ListMetrics
+* ec2:DescribeTags
+
+Keep the secret and access keys in a secure place - you'll use them in the section below.
+
+### System Requirements
+
+First, ensure Python >= 2.7 is installed. Run
+
+    python -V
+
+to confirm. Next, it's recommended that you install:
+
+* [pip](https://pip.pypa.io/en/stable/installing/)
+* [virtualenvwrapper](http://virtualenvwrapper.readthedocs.io/en/latest/install.html#basic-installation)
+
+After installation, create a new virtual environment:
+
+    mkvirtualenv aws-freebsd-mon
+
+and install the necessary modules:
+
+    pip install -r requirements.txt
+
+Finally, run
+
+    aws configure
+
+to add your AWS access and secret keys you created above to a config file this program can read.
 
 ### Usage
 
