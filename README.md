@@ -10,3 +10,11 @@ This code helps fill that gap, monitoring CPU, Memory, Disk and Network metrics 
 
 * Python >= 2.7
 * Modules listed in requirements.txt
+
+### Usage
+
+    from MetricsMonitor import MetricsMonitor, Metric, CloudWatchClient
+    c = CloudWatchClient()
+    mm = MetricsMonitor()
+    m = Metric('MemoryUtilization', mm.get_memory_utilization(), 'Percent')
+    c.put_metric_data(m.data)
