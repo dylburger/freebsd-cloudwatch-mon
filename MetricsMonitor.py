@@ -1,27 +1,6 @@
 from __future__ import print_function
 import platform
-import boto3
 import psutil
-import config
-
-
-class CloudWatchClient(object):
-    """ Handles connection and POSTing of metrics data
-        to CloudWatch
-    """
-    # Our config is shared across all Metrics
-    cfg = config.YAMLParser(config.CONFIG_FILE).config
-
-    @classmethod
-    def get_namespace(cls):
-        return cls.cfg['cloudwatch_namespace']
-
-    def __init__(self):
-        self.client = boto3.client('cloudwatch')
-        self.namespace = self.get_namespace()
-
-    def put_metric_data(self, metric_data):
-        self.client.put_metric_data(Namespace=self.namespace, MetricData=metric_data)
 
 
 class MetricsMonitor(object):
@@ -42,20 +21,3 @@ class MetricsMonitor(object):
             return psutil.disk_usage(partition)
         except OSError:
             print("The partition %s you passed doesn't appear to exist" % partition)
-
-
-class Metric(object):
-    """ Class to hold CloudWatch metric dictionaries,
-        to be POSTed to AWS by a CloudwatchClient
-    """
-    def __init__(self, metric_name, value, unit):
-        metric_data = []
-        metric_data.append({})
-        d = metric_data[0]
-        d['MetricName'] = metric_name
-        d['Value'] = value
-        d['Unit'] = unit
-        self.data = metric_data
-
-    def __repr__(self):
-        return 'Metric(%r)' % (self.data)
