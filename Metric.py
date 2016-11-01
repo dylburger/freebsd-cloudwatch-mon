@@ -43,8 +43,8 @@ class MemoryMetric(Metric):
 class DiskUsageMetric(Metric):
     """ Sublass to handle disk usage metrics for a particular partition
     """
-    def __init__(self, partition, metric_name="MemUtilization", value=0, unit="Percent"):
-        Metric.__init__(self, metric_name, value, unit)
+    def __init__(self, partition, metric_name="DiskUsage", value=0, unit="Percent"):
+        Metric.__init__(self, "%s: %s" % (metric_name, partition), value, unit)
         self.partition = partition
 
     def poll(self):
