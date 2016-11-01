@@ -54,8 +54,8 @@ There are a handful of classes we've defined:
 
 Here's an example of how you can push memory utilization to CloudWatch:
 
-    from MetricsMonitor import MetricsMonitor, Metric, CloudWatchClient
-    c = CloudWatchClient()
-    mm = MetricsMonitor()
-    m = Metric('MemoryUtilization', mm.get_memory_utilization(), 'Percent')
-    c.put_metric_data(m.data)
+	>>> from CloudWatchClient import CloudWatchClient
+	>>> from Metric import MemoryMetric
+	>>> c = CloudWatchClient()
+	>>> mm = MemoryMetric()
+	>>> c.put_metric_data(mm.poll())
