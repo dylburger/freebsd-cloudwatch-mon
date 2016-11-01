@@ -18,6 +18,6 @@ class MetricsMonitor(object):
 
     def get_disk_space(self, partition):
         try:
-            return psutil.disk_usage(partition)
+            return psutil.disk_usage(partition).percent
         except OSError:
             print("The partition %s you passed doesn't appear to exist" % partition)

@@ -38,3 +38,18 @@ class MemoryMetric(Metric):
         memory_utilization = self.metric_monitor.get_memory_utilization()
         super(MemoryMetric, self).update_metric_value(memory_utilization)
         return self.data
+
+
+class DiskUsageMetric(Metric):
+    """ Sublass to handle disk usage metrics for a particular partition
+    """
+    def __init__(self, partition, metric_name="MemUtilization", value=0, unit="Percent"):
+        Metric.__init__(self, metric_name, value, unit)
+        self.partition = partition
+
+    def poll(self):
+        """ Poll for disk usage, returning data
+        """
+        disk_usage = self.metric_monitor.get_disk_space(self.partition)
+        super(DiskUsageMetric, self).update_metric_value(disk_usage)
+        return self.data
