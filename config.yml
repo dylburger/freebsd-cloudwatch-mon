@@ -1,1 +1,8 @@
 cloudwatch_namespace: "Servers/FreeBSD"
+metrics:
+    memory_utilization:
+        metric_name: "MemUtilization"
+        unit: "Percent"
+    disk_usage:
+        metric_name: "DiskUsage"
+        unit: "Percent"
