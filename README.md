@@ -44,18 +44,25 @@ to add your AWS access and secret keys you created above to a config file this p
 
 ### Usage
 
-When creating a new CloudWatch metric, you have the option to define your own [namespace](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/aws-namespaces.html). The default, custom namespace we define here can be found in _config.yml_. This namespace is used when pushing metrics to CloudWatch, but can be overridden on a metric-by-metric basis (see the _put\_metric\_data_ method in the _CloudWatchClient_ class).
+When creating a new CloudWatch metric, you have the option to define your own [namespace](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/aws-namespaces.html). We've defined a default namespace tied to all metrics in `config.yml`.
 
-There are a handful of classes we've defined:
+All metrics are also configured in `config.yml`, with an associated Metric Name (tied to your metric in CloudWatch) and the Units tied to the metric value:
 
-* _CloudWatchClient_ : Handles the connection to AWS, and the PUT requests to CloudWatch
-* _MetricsMonitor_ : Polls the FreeBSD server for data
-* _Metric_ : Abstracts the creation of a [put\_metric\_data](http://boto3.readthedocs.io/en/latest/reference/services/cloudwatch.html#CloudWatch.Client.put_metric_data) request object to be passed to our _CloudWatchClient_
+	metrics:
+		memory_utilization:
+			metric_name: "MemUtilization"
+			unit: "Percent"
+		disk_usage:
+			metric_name: "DiskUsage"
+			unit: "Percent"
 
-Here's an example of how you can push memory utilization to CloudWatch:
+Here's an example of how you can push memory utilization and disk usage to CloudWatch:
 
-	>>> from CloudWatchClient import CloudWatchClient
-	>>> from Metric import MemoryMetric
-	>>> c = CloudWatchClient()
-	>>> mm = MemoryMetric()
-	>>> c.put_metric_data(mm.poll())
+	>>> from CloudWatchMonitor import Metric
+	>>> mm = Metric('memory_utilization')
+	>>> mm.update()
+	Successfully PUT value 75.2 Percent to metric MemUtilization in CloudWatch
+	>>> dm = Metric('disk_usage')
+	>>> dm.update(partition='/')
+	Successfully PUT value 23.5 Percent to metric DiskUsage in CloudWatch
+
