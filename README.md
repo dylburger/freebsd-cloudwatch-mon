@@ -2,7 +2,7 @@
 
 **What does this do?**
 
-Polls Memory Utilization, CPU usage, and other systems metrics for FreeBSD, pushing them to [CloudWatch](https://aws.amazon.com/cloudwatch/).
+Polls memory utilization, CPU usage, and other systems metrics for FreeBSD, pushing them to [CloudWatch](https://aws.amazon.com/cloudwatch/).
 
 **Why this tool?**
 
