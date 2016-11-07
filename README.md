@@ -2,9 +2,11 @@
 
 Collect system metrics from a FreeBSD system, push to Amazon CloudWatch.
 
-The [scripts](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/mon-scripts.html) Amazon provides to poll metrics for Linux systems uses [procfs](https://en.wikipedia.org/wiki/Procfs), which has been [deprecated on FreeBSD](https://lists.freebsd.org/pipermail/freebsd-fs/2011-February/010760.html). 
+The [scripts](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/mon-scripts.html) Amazon provides to push metrics for Linux systems to CloudWatch uses [procfs](https://en.wikipedia.org/wiki/Procfs), which has been [deprecated on FreeBSD](https://lists.freebsd.org/pipermail/freebsd-fs/2011-February/010760.html). 
 
-This code helps fill that gap, monitoring CPU, Memory, Disk and Network metrics on FreeBSD using pure Python. In theory, this will work on any architecture on which [psutil](https://github.com/giampaolo/psutil) is configured to work, but this code has been tested on FreeBSD only.
+This code helps fill that gap, monitoring CPU, Memory, Disk and Network metrics on FreeBSD. 
+
+In theory, this will work on any architecture on which [psutil](https://github.com/giampaolo/psutil) is configured to work, but this tool has been tested on FreeBSD only.
 
 ### AWS Requirements
 
@@ -40,13 +42,13 @@ Finally, run
 
     aws configure
 
-to add your AWS access and secret keys you created above to a config file this program can read.
+to add your AWS access and secret keys you created above to a config file, which we'll use to push metrics to your account.
 
 ### Usage
 
 When creating a new CloudWatch metric, you have the option to define your own [namespace](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/aws-namespaces.html). We've defined a default namespace tied to all metrics in `config.yml`.
 
-All metrics are also configured in `config.yml`, with an associated Metric Name (tied to your metric in CloudWatch) and the Units tied to the metric value:
+All metrics are also configured in `config.yml`, each with a Metric Name (tied to your metric in CloudWatch) and the Units tied to the metric value:
 
 	metrics:
 		memory_utilization:
@@ -56,7 +58,7 @@ All metrics are also configured in `config.yml`, with an associated Metric Name 
 			metric_name: "DiskUsage"
 			unit: "Percent"
 
-Here's an example of how you can push memory utilization and disk usage to CloudWatch:
+Here's an example of how you can push memory utilization and disk usage stats to CloudWatch:
 
 	>>> from CloudWatchMonitor import Metric
 	>>> mm = Metric('memory_utilization')
