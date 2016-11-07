@@ -1,5 +1,7 @@
 # FreeBSD CloudWatch Monitor
 
+**This is still a work in progress and should not be used to monitor production systems**
+
 **What does this do?**
 
 Polls memory utilization, CPU usage, and other systems metrics for FreeBSD, pushing them to [CloudWatch](https://aws.amazon.com/cloudwatch/).
@@ -7,8 +9,6 @@ Polls memory utilization, CPU usage, and other systems metrics for FreeBSD, push
 **Why this tool?**
 
 The [scripts](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/mon-scripts.html) Amazon provides to push metrics for Linux systems to CloudWatch uses [procfs](https://en.wikipedia.org/wiki/Procfs), which has been [deprecated on FreeBSD](https://lists.freebsd.org/pipermail/freebsd-fs/2011-February/010760.html). 
-
-There is no library I found to cleanly create new metrics and automate the collection of the data on FreeBSD and for CloudWatch.
 
 **Can I use it on Linux or other systems?**
 
